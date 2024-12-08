@@ -1,30 +1,56 @@
 'use client'
 
-import {useEditor, EditorContent} from '@tiptap/react'
+import { useEditor, EditorContent } from '@tiptap/react'
 import StarterKit from '@tiptap/starter-kit'
 import TaskItem from '@tiptap/extension-task-item'
 import TaskList from '@tiptap/extension-task-list'
+import Table from '@tiptap/extension-table'
+import TableCell from '@tiptap/extension-table-cell'
+import TableHeader from '@tiptap/extension-table-header'
+import TableRow from '@tiptap/extension-table-row'
 
 const Editor = () => {
   const editor = useEditor({
-    editorProps:{
-        attributes: {
-            style: 'padding-left: 56px; padding-right: 56px;',
-            class: 'focus:outline-none print:border-none bg-white border border-gray-200 flex flex-col min-h-[1054px] pt-10 pr-14 pb-10 cursor-text',
-        },
+    editorProps: {
+      attributes: {
+        style: 'padding-left: 56px; padding-right: 56px;',
+        class:
+          'focus:outline-none print:border-none bg-white border border-gray-200 flex flex-col min-h-[1054px] pt-10 pr-14 pb-10 cursor-text'
+      }
     },
     extensions: [
       StarterKit,
       TaskItem.configure({
-        nested: true,
+        nested: true
       }),
-      TaskList
+      TaskList,
+      Table.configure({
+        resizable: true
+      }),
+      TableCell,
+      TableHeader,
+      TableRow
     ],
-    content: '<p>Hello World</p>',
+    content: `
+    <table>
+      <tbody>
+        <tr>
+          <th>Name</th>
+          <th colspan="3">Description</th>
+        </tr>
+        <tr>
+          <td>Cyndi Lauper</td>
+          <td>Singer</td>
+          <td>Songwriter</td>
+          <td>Actress</td>
+        </tr>
+      </tbody>
+    </table>
+  `
   })
   return (
-    <div className="size-full bg-gray-100">
-        <EditorContent editor={editor} />
+    <div className='size-full bg-gray-100'>
+      <EditorContent editor={editor} />
     </div>
   )
 }
