@@ -1,7 +1,13 @@
 'use client'
 import { cn } from '@/lib/utils'
 import useEditorStore from '@/store/use-editor-store'
-import { LucideIcon, PrinterIcon, Redo2Icon, Undo2Icon } from 'lucide-react'
+import {
+  LucideIcon,
+  PrinterIcon,
+  Redo2Icon,
+  SpellCheckIcon,
+  Undo2Icon
+} from 'lucide-react'
 
 interface ToolbarButtonProps {
   icon: LucideIcon
@@ -53,13 +59,24 @@ const Toolbar = () => {
         label: 'Print',
         icon: PrinterIcon,
         onClick: () => window.print()
+      },
+      {
+        label: 'Spell Check',
+        icon: SpellCheckIcon,
+        onClick: () => {
+          const current = editor?.view.dom.getAttribute('spellcheck')
+          editor?.view.dom.setAttribute(
+            'spellcheck',
+            current === 'false' ? 'true' : 'false'
+          )
+        }
       }
     ]
   ]
 
   return (
     <div className='bg-[#f1f4f9] px-2.5 py-0.5 rounded-[24px] min-h-[40px] flex items-center gap-x-0.5 overflow-x-auto'>
-      {section[0].map((item) => (
+      {section[0].map(item => (
         <ToolbarButton key={item.label} {...item} />
       ))}
     </div>
